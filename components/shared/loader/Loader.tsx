@@ -1,4 +1,3 @@
-"use client";
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React, { useEffect, useState } from "react";
 import { Loader as LoaderIcon } from "lucide-react";

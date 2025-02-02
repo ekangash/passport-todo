@@ -1,27 +1,33 @@
-"use client";
 /** 1 Node - Modules, Components, Hooks, Icons */
-import React from 'react';
-import {Loader} from "lucide-react";
-import {observer} from "mobx-react-lite";
+import React from "react";
+import { Loader } from "lucide-react";
+import { observer } from "mobx-react-lite";
 
 /** 2 App - Components, Hooks */
-import {LoaderPlaceholder} from "@/components/shared/loader/placeholder/LoaderPlaceholder";
-import {Icon} from "@/components/shared/icon/Icon";
-import {PASSPORT_STATUS} from "@/types/passport.d";
+import { LoaderPlaceholder } from "@/components/shared/loader/placeholder/LoaderPlaceholder";
+import { Icon } from "@/components/shared/icon/Icon";
+import { PASSPORT_STATUS } from "@/types/passport.d";
 
 /** 3 Entities, Stores, Packages, Enums ... */
-import {ACTION_MESSAGES} from "@/enums/action/messages";
-import {PassportStore} from "@/stores/PassportStore";
+import { ACTION_MESSAGES } from "@/enums/action/messages";
+import { PassportStore } from "@/stores/PassportStore";
 
-export type AppSessionPassportLoaderChildrenProp = React.ReactNode|((authorized: boolean) => React.ReactElement<any, string|React.JSXElementConstructor<any>>|null|React.ReactNode);
+export type AppSessionPassportLoaderChildrenProp =
+  | React.ReactNode
+  | ((
+      authorized: boolean
+    ) =>
+      | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+      | null
+      | React.ReactNode);
 
 /**
  * @interface AppSessionPassportLoaderProps
  */
 interface AppSessionPassportLoaderProps {
-    children: AppSessionPassportLoaderChildrenProp;
-    animation?: React.ReactElement | null;
-    as?: React.ElementType;
+  children: AppSessionPassportLoaderChildrenProp;
+  animation?: React.ReactElement | null;
+  as?: React.ElementType;
 }
 
 /**
@@ -32,25 +38,20 @@ interface AppSessionPassportLoaderProps {
  *
  * @return {React.ReactElement} Сформированные DOM узлы.
  */
-export const AppPassportLoader: React.FC<AppSessionPassportLoaderProps> = observer(({
-    children,
-    animation = null,
-    as: As = React.Fragment
-}): React.ReactElement => {
-  if (PassportStore.status === PASSPORT_STATUS.LOADING) {
+export const AppPassportLoader: React.FC<AppSessionPassportLoaderProps> = observer(
+  ({ children, animation = null, as: As = React.Fragment }): React.ReactElement => {
+    if (PassportStore.status === PASSPORT_STATUS.LOADING) {
       return animation ? (
-          <As>{animation}</As>
+        <As>{animation}</As>
       ) : (
-          <LoaderPlaceholder
-              description={ACTION_MESSAGES.LOADING_SESSION}
-              square
-          >
-              <Icon path={Loader} size={7} variant="spinner" />
-          </LoaderPlaceholder>
+        <LoaderPlaceholder description={ACTION_MESSAGES.LOADING_SESSION} square>
+          <Icon path={Loader} size={7} variant="spinner" />
+        </LoaderPlaceholder>
       );
-  }
+    }
 
-  return (
-      <>{typeof children === 'function' ? children(PassportStore.isAuthenticated()) : children}</>
-  );
-});
+    return (
+      <>{typeof children === "function" ? children(PassportStore.isAuthenticated()) : children}</>
+    );
+  }
+);

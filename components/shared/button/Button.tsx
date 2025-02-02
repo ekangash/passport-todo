@@ -2,7 +2,6 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { NavLink } from "react-router-dom";
 
 /** 2 App - Components, Hooks */
 import { AppExceptionHandler } from "@/components/app/exception/AppExceptionHandler";
@@ -80,7 +79,6 @@ export interface ButtonProps
   asWrap?: string;
   loading?: boolean;
   disabled?: boolean;
-  href?: string;
   target?: string;
 }
 
@@ -100,7 +98,6 @@ const Button: React.ForwardRefExoticComponent<ButtonProps> = React.forwardRef<
       feature,
       rounded,
       disabled = false,
-      href = "",
       target = "",
       children,
       onClick = null,
@@ -111,8 +108,7 @@ const Button: React.ForwardRefExoticComponent<ButtonProps> = React.forwardRef<
     },
     ref
   ) => {
-    const hrefIsDefined = href.length > 0 && href;
-    const Comp = asChild ? Slot : (hrefIsDefined ? NavLink : asWrap);
+    const Comp = asChild ? Slot : asWrap;
 
     /**
      * Промежуточное событие 'onClick' кнопки.
@@ -137,7 +133,6 @@ const Button: React.ForwardRefExoticComponent<ButtonProps> = React.forwardRef<
         ref={ref}
         {...(Comp === "button" && { disabled })}
         {...(typeof onClick === "function" && { onClick: onClickMiddleware })}
-        {...(hrefIsDefined && { to: href, target })}
         {...props}
       >
         {children}

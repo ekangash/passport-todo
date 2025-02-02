@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist/ && eslint . --ext .ts && tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts && copyfiles ./package.json dist",
+    "build": "rimraf dist/ && eslint . --ext .ts && tsc && vite build && copyfiles ./package.json dist",
     "dts": "dts-bundle-generator --config ./dts-bundle-generator.config.ts",
     "test": "vitest",
     "lint": "eslint .",
     "test:coverage": "vitest --coverage",
     "lint:scripts": "eslint . --ext .ts",
-    "format:scripts": "prettier packages enums hooks components types main.tsx postcss.config.js vite.config.ts tailwind.config.ts tests --write"
+    "format:scripts": "prettier packages enums hooks components types main.tsx postcss.config.js vite.config.ts tailwind.config.ts tests stores --write"
   },
   "author": "Eduard Kangash",
   "license": "MIT",
@@ -52,7 +52,6 @@
     "@vitest/coverage-v8": "^2.0.4",
     "autoprefixer": "^10.4.20",
     "copyfiles": "^2.4.1",
-    "dts-bundle-generator": "^9.5.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
