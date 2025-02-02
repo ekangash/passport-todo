@@ -1,6 +1,6 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React, {useState} from 'react';
-import {useSearchParams, useHistory} from "react-router-dom";
+import {useSearchParams, useNavigate} from "react-router-dom";
 import {Mail, Lock} from "lucide-react";
 import {UseFormReturn} from "react-hook-form/dist/types";
 import {toast} from "sonner";
@@ -30,7 +30,7 @@ const UNDEFINED_ERR0R = 'undefined_error';
 export const PassportLoginPage: React.FC = (): React.ReactElement => {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [urlSearchParams] = useSearchParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     console.log('searchParams', urlSearchParams.get('callbackUrl'))
 
@@ -45,7 +45,7 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
         const promise = PassportStore.login().then(async (): Promise<void> => {
             const session = await PassportStore.initSession();
             const pathToRedirect: string = urlSearchParams.get('callbackUrl') || '/';
-            history.push(pathToRedirect);
+            navigate(pathToRedirect);
         }).catch((exception) => {
             if (exception instanceof AxiosError) {
                 const responseStatus: number = exception?.response?.status || 0;

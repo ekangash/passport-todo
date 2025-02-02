@@ -18,12 +18,12 @@ export class Passport {
     status: PASSPORT_STATUS = PASSPORT_STATUS.LOADING;
 
     /**
-     * @property {object|null} session Сесин авторизации.
+     * @property {object|null} profile Профиль сименса авторизации.
      */
     profile: object|null = null;
 
     /**
-     * @property {object|null} session Сесин авторизации.
+     * @property {object|null} accessToken Токен безопасности.
      */
     accessToken: string|null = null;
 
@@ -33,11 +33,11 @@ export class Passport {
      */
     constructor() {
         makeObservable(this, {
-            session: observable,
+            profile: observable,
             status: observable,
             accessToken: observable,
             setStatus: action.bound,
-            setSession: action.bound,
+            setProfile: action.bound,
             isAuthenticated: observable,
             isLoading: observable,
         });
