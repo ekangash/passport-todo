@@ -1,0 +1,17 @@
+node_modules
+build
+dist
+coverage
+.env
+
+# Editor directories and files
+.vscode/*
+.history/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

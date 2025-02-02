@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --minor: #8a8989;
+    --minor-foreground: #43434a;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --window: 0 0% 100%;
+    --window-foreground: 240 10% 3.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-hoverable: 240 5.9% 90%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --window: 240 5.9% 10%;
+    --window-foreground: 0 0% 98%;
+    --primary: 221.2 83.2% 53.3%;
+    --secondary-hoverable: 240 5% 21%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .link-text {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  .link-title {
+    @apply dark:hover:text-accent-foreground dark:text-white/70 text-black hover:text-primary;
+  }
+
+  .layout-space-y {
+    @apply space-y-4 sm:space-y-8;
+  }
+
+  .layout-m {
+    @apply m-3 xs:m-4;
+  }
+
+  .layout-mx {
+    @apply mx-3 xs:mx-4;
+  }
+
+  .layout-px-to-xl {
+    @apply xl:px-3;
+  }
+
+  .layout-px-to-lg {
+    @apply lg:px-3;
+  }
+
+  .layout-px-to-md {
+    @apply md:px-3;
+  }
+
+  .layout-px-to-sm {
+    @apply sm:px-3;
+  }
+
+  .layout-px-from-sm {
+    @apply px-3 sm:px-0;
+  }
+
+  .layout-px-from-md {
+    @apply px-3 md:px-0;
+  }
+
+  .layout-px-from-lg {
+    @apply px-3 lg:px-0;
+  }
+
+  .layout-px-from-xl {
+    @apply px-3 xl:px-0;
+  }
+
+  .layout-px {
+    @apply px-3;
+  }
+
+  .layout-py {
+    @apply py-3;
+  }
+
+  .layout-pb {
+    @apply pb-3;
+  }
+
+  .layout-p {
+    @apply p-3;
+  }
+
+  .layout-p-from-md {
+    @apply p-3 xs:p-4 md:p-0;
+  }
+
+  .layout-p-from-sm {
+    @apply p-3 xs:p-0 sm:p-4;
+  }
+
+  .layout-p-from-xs {
+    @apply p-3 xs:p-0;
+  }
+
+  .article-shadow {
+    @apply relative;
+  }
+
+  .article-shadow:before {
+    @apply bg-gray-50 left-0 absolute w-full;
+  }
+
+  .straight {
+    @apply line-clamp-1 whitespace-pre-line;
+  }
+}
+
+.passport-layout-cover {
+  background-size: cover;
+  min-height: 100vh;
+  overflow: auto;
+
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+}
+
+.bg-cover {
+  &-1 {
+    background-image: url(/img/cover/im2SMuGL.jpg);
+  }
+
+  &-2 {
+    background-image: url(/img/cover/2GA48Vnf.jpg);
+  }
+
+  &-3 {
+    background-image: url(/img/cover/fotolia.jpg);
+  }
+
+  &-4 {
+    background-image: url(/img/cover/FemaleAdventurer.webp);
+  }
+}

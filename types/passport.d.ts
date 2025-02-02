@@ -1,0 +1,7 @@
+
+
+export enum PASSPORT_STATUS {
+    UNAUTHENTICATED,
+    AUTHENTICATED,
+    LOADING,
+}

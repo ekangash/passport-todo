@@ -1,0 +1,32 @@
+name: testing application
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  app-build-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy .env
+        run: cp .env.dist .env
+      - name: Build the Docker image
+        run: docker compose -f docker-compose.prod.yaml up -d --build
+  app-test-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy .env
+        run: cp .env.dist .env
+      - name: Build the Docker image
+        run: docker compose up -d --build
+      - name: Install Dependencies
+        run: docker compose exec -u root dev-client npm install
+      - name: Execute eslint scripts
+        run: docker compose exec -u root dev-client npm run lint:scripts
+      - name: Execute eslint react components
+        run: docker compose exec -u root dev-client npm run lint
+      - name: Execute tests (Unit tests) via vitest
+        run: docker compose exec -u root dev-client npm run test
