@@ -8,7 +8,7 @@
     "dev:client": "vite",
     "dev:watch": "rimraf build && concurrently 'tsc && vite build --watch' 'npm run dev:server'",
     "dev": "concurrently 'npm run dev:client' 'npm run dev:server'",
-    "build": "rimraf build && eslint . --ext .ts && tsc && vite build && copyfiles ./package.json build",
+    "build": "rimraf build && eslint . && tsc && vite build && copyfiles ./package.json build",
     "start": "",
     "dts": "dts-bundle-generator --config ./dts-bundle-generator.config.ts",
     "test": "vitest",

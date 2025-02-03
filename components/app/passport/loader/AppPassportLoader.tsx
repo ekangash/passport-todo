@@ -14,7 +14,9 @@ import { PassportStore } from "@/stores/PassportStore";
 
 export type AppSessionPassportLoaderChildrenProp =
   | React.ReactNode
-  | ((authorized: boolean) =>
+  | ((
+      authorized: boolean
+    ) =>
       | React.ReactElement<any, string | React.JSXElementConstructor<any>>
       | null
       | React.ReactNode);
