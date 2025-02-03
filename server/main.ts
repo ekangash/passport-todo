@@ -29,7 +29,6 @@ app.post("/api/passport/login", (req, res) => {
 const buildPath = path.normalize(path.join(__dirname, "../build/dist"));
 app.use(express.static(buildPath));
 app.get("(/*)?", async (req, res, next) => {
-  console.log("render", req.path);
   res.sendFile(path.join(buildPath, "index.html"));
 });
 
