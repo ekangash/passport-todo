@@ -18,9 +18,7 @@ export const AppLayout: React.FC = () => {
       <AppLayoutHeader className="p-4 mx-auto sticky top-0 z-10 bg-card w-full" />
       <div className="max-w-3xl mx-auto w-full px-4 flex-1 pb-20">
         <AppPassportLoader>
-          {(authorized: boolean): React.ReactElement =>
-            authorized ? <Outlet /> : <AppLayoutPassportUnauthenticated />
-          }
+          {(authorized: boolean): React.ReactElement => authorized ? <Outlet /> : <AppLayoutPassportUnauthenticated />}
         </AppPassportLoader>
       </div>
     </main>

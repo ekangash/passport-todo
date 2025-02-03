@@ -20,7 +20,7 @@ FROM nginx AS runner
 
 WORKDIR /var/www/app
 
-COPY --from=builder --chown=1000:1000 /var/www/app/dist /var/www/app/dist
+COPY --from=builder --chown=1000:1000 /var/www/app/build/dist /var/www/app/dist
 COPY --from=builder /var/www/app/node_modules ./node_modules
 COPY --from=builder /var/www/app/package.json ./package.json
 

@@ -5,7 +5,6 @@ import { Mail, Lock } from "lucide-react";
 import { UseFormReturn } from "react-hook-form/dist/types";
 import { toast } from "sonner";
 import { obj } from "data-support";
-import { AxiosError } from "axios";
 import { yupSupport } from "@/packages/yup/support";
 import { yup } from "@/packages/yup/index";
 
@@ -16,7 +15,6 @@ import { Button } from "@/components/shared/button/Button";
 
 /** 3 Entities, Stores, Packages, Enums ... */
 import { cn } from "@/packages/utils";
-import { REQUEST_STATUSES } from "@/enums/request/statuses";
 import { PassportStore } from "@/stores/PassportStore";
 
 const UNDEFINED_ERR0R = "undefined_error";

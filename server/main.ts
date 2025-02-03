@@ -1,7 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "url";
 import path from "path";
-import {encrypt} from "packages/crypt/index.js";
+import { encrypt } from "packages/crypt/index.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -14,8 +14,8 @@ app.get("/api/passport/profile", (req, res) => {
 
 app.post("/api/passport/login", (req, res) => {
   const credentials = req.body;
-  const accessToken = 'wrewrwerw';
-  const session = encrypt({ email: credentials['email'], accessToken });
+  const accessToken = "wrewrwerw";
+  const session = encrypt({ email: credentials["email"], accessToken });
 
   // res.cookie("passport", session, {
   //   httpOnly: true,

@@ -5,7 +5,7 @@ import React from "react";
 import { ThemeProvider } from "@/components/app/theme/provider/AppThemeProvider";
 import { AppRouters } from "@/components/app/routers/AppRouters";
 import { AppToaster } from "@/components/app/toaster/AppToaster";
-import { AppPassportInitSession } from "@/components/app/passport/init-session/AppPassportInitSession";
+import {AppPassportInitSession} from "@/components/app/passport/init-session/AppPassportInitSession.tsx";
 
 /** 3 Entities, Stores, Packages, Enums ... */
 import "@/components/app/App.scss";
@@ -16,9 +16,9 @@ import "@/components/app/App.scss";
 export const App: React.FC = (): React.ReactElement => {
   return (
     <ThemeProvider>
-      <AppRouters />
+        <AppPassportInitSession/>
+        <AppRouters />
       <AppToaster />
-      <AppPassportInitSession />
     </ThemeProvider>
   );
 };

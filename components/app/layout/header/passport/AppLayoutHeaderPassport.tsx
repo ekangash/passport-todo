@@ -1,8 +1,8 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React from "react";
-import {ArrowRightFromLine, User} from "lucide-react";
+import { ArrowRightFromLine, User } from "lucide-react";
 import { toast } from "sonner";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 /** 2 App - Components, Hooks */
 import { AppPassportLoader } from "@/components/app/passport/loader/AppPassportLoader";
@@ -16,7 +16,6 @@ import { Icon } from "@/components/shared/icon/Icon";
  * @return {React.ReactElement} Сформированный DOM узел.
  */
 export const AppLayoutHeaderPassport: React.FC = (): React.ReactElement => {
-
   /**
    * @return {Promise<void>}
    */
@@ -41,18 +40,18 @@ export const AppLayoutHeaderPassport: React.FC = (): React.ReactElement => {
     >
       {(authorized: boolean): React.ReactElement =>
         authorized && (
-            <>
+          <>
             <NavLink to="/profile">
               <Button variant="secondary" size="oblong" text="sm">
                 <Icon path={User} color="none" size={4} />
                 Профиль
               </Button>
             </NavLink>
-              <Button onClick={onUserLogout} variant="secondary" size="oblong" text="sm">
-                Выйти
-                <Icon path={ArrowRightFromLine} color="none" size={4} />
-              </Button>
-            </>
+            <Button onClick={onUserLogout} variant="secondary" size="oblong" text="sm">
+              Выйти
+              <Icon path={ArrowRightFromLine} color="none" size={4} />
+            </Button>
+          </>
         )
       }
     </AppPassportLoader>

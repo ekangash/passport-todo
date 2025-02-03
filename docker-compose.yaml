@@ -1,6 +1,6 @@
 services:
   dev-client:
-    container_name: todo-for-mindbox-dev
+    container_name: passport-todo-dev
     image: node:22.12.0
     working_dir: /var/www/app
     command: ["sleep", "infinity"]

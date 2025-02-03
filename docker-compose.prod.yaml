@@ -1,6 +1,6 @@
 services:
   prod-client:
-    container_name: todo-for-mindbox-prod
+    container_name: passport-todo-prod
     build:
       context: .
       dockerfile: docker/prod/Dockerfile

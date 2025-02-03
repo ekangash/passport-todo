@@ -36,9 +36,9 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
   const onRegisterUser = async (attributes: object, formMethods: UseFormReturn): Promise<void> => {
     setSubmitting(true);
     const promise = PassportStore.register(
-        obj.get(attributes, "email"),
-        obj.get(attributes, "password"),
-        obj.get(attributes, "fullname")
+      obj.get(attributes, "email"),
+      obj.get(attributes, "password"),
+      obj.get(attributes, "fullname")
     )
       .then(() => {
         setSubmitting(false);

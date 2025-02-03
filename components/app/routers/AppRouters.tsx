@@ -21,17 +21,17 @@ import { PassportLoginPage } from "@/components/pages/passport/login/PassportLog
 export const AppRouters: React.FC = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path={"/*"} element={<AppLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path={"profile"} element={<ProfilePage />} />
-        </Route>
-        <Route path={"/passport/*"} element={<PassportLayout />}>
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path={"register"} element={<PassportRegisterPage />} />
-          <Route path={"login"} element={<PassportLoginPage />} />
-        </Route>
-      </Routes>
+        <Routes>
+            <Route path={"/*"} element={<AppLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path={"profile"} element={<ProfilePage />} />
+            </Route>
+            <Route path={"/passport/*"} element={<PassportLayout />}>
+                <Route path="*" element={<NotFoundPage />} />
+                <Route path={"register"} element={<PassportRegisterPage />} />
+                <Route path={"login"} element={<PassportLoginPage />} />
+            </Route>
+        </Routes>
     </BrowserRouter>
   );
 };

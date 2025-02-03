@@ -14,7 +14,6 @@ import { Caption } from "@/components/shared/caption/Caption";
  * @return {React.ReactElement} Сформированный DOM узел.
  */
 export const AppLayoutPassportUnauthenticated: React.FC = () => {
-
   return (
     <>
       <Caption
