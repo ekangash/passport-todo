@@ -11,6 +11,7 @@
         "isolatedModules": false,
         "moduleDetection": "force",
         "noEmit": true,
+        "esModuleInterop": true,
 
         /* Linting */
         "strict": false,

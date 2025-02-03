@@ -1,0 +1,6 @@
+{
+  "watch": ["server"],
+  "ext": ".ts, .js",
+  "ignore": ["node_modules"],
+  "exec": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./server/main.ts"
+}

@@ -154,7 +154,7 @@ export class AppExceptionHandler {
    * @return {any} Результат обработки.
    */
   handle(exception): any {
-    if (inst.get(exception, "isAxiosError", false) && exception instanceof AxiosError) {
+    if (exception instanceof AxiosError) {
       return this.handleAxiosException(exception);
     } else {
       return this.onError(exception);

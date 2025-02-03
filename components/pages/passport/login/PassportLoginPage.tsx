@@ -1,6 +1,6 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React, { useState } from "react";
-import {useSearchParams, useNavigate, NavLink} from "react-router-dom";
+import { useSearchParams, useNavigate, NavLink } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { UseFormReturn } from "react-hook-form/dist/types";
 import { toast } from "sonner";
@@ -30,8 +30,6 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
   const [urlSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  console.log("searchParams", urlSearchParams.get("callbackUrl"));
-
   /**
    * Авторизация пользователя в систему
    *
@@ -41,50 +39,18 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
     setSubmitting(true);
 
     const promise = PassportStore.login(
-        obj.get(attributes, "email"), obj.get(attributes, "password")
-    ).then(async (): Promise<void> => {
+      obj.get(attributes, "email"),
+      obj.get(attributes, "password")
+    )
+      .then(async (): Promise<void> => {
         await PassportStore.initSession();
         const pathToRedirect: string = urlSearchParams.get("callbackUrl") || "/";
         navigate(pathToRedirect);
       })
       .catch(exception => {
-        if (exception instanceof AxiosError) {
-          const responseStatus: number = exception?.response?.status || 0;
-
-          if (responseStatus === REQUEST_STATUSES.BAD_REQUEST) {
-            formMethods.setError(UNDEFINED_ERR0R, {
-              type: "manual",
-              message: exception?.response?.data?.message,
-            });
-
-            throw exception;
-          } else if (responseStatus === REQUEST_STATUSES.UNAUTHORIZED) {
-            formMethods.setError(UNDEFINED_ERR0R, {
-              type: "manual",
-              message: exception?.response?.data?.message,
-            });
-
-            throw exception;
-          } else if (responseStatus === REQUEST_STATUSES.FORBIDDEN) {
-            formMethods.setError("password", {
-              type: "manual",
-              message: exception?.response?.data?.message,
-            });
-
-            throw exception;
-          } else if (responseStatus === REQUEST_STATUSES.INTERNAL_SERVER) {
-            formMethods.setError(UNDEFINED_ERR0R, {
-              type: "manual",
-              message: exception?.response?.data?.message,
-            });
-
-            throw exception;
-          }
-        }
-
         formMethods.setError(UNDEFINED_ERR0R, {
           type: "manual",
-          message: "Неизвестная ошибка, попробуйте снова",
+          message: exception.message,
         });
 
         throw exception;
@@ -108,7 +74,6 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
         email: "Адрес электронной почты",
       },
       yup.object().shape({
-        fullname: yup.string().max(50).required("Поле «${label}» должно быть заполнено"),
         email: yup
           .string()
           .email("Не похоже на адрес электронной почты")
@@ -118,74 +83,73 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
     );
 
   return (
-    <Form defaultValues={{}} resolver={formResolver} onSubmit={onUserLogging}>
+    <Form
+      defaultValues={{}}
+      resolver={formResolver}
+      onSubmit={onUserLogging}
+      className="flex flex-col gap-4"
+    >
       {({ clearErrors, formState: { errors } }) => (
         <>
-          <div className="space-y-4">
-            <p className="text-gray-400 text-xs">
-              У вас нет ещё доступной учётной записи в системе? Тогда стоит заполнить форму
-              регистрации:
-            </p>
-            <NavLink to="/passport/register">
-              <Button
-                  variant="secondary"
-                  className="w-full"
-                  size="oblong-2"
-              >
-                Регистрировать учетную запись
-              </Button>
-            </NavLink>
-            <Strip text="или" />
-            <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-bold leading-none text-secondary-foreground">
-                Авторизация
-              </h2>
-              <p className="text-gray-400 text-xs">
-                Введите свой адрес электронной почты и пароль, чтобы войти в систему для получения
-                доступа к использованию сервиса.
-              </p>
-            </div>
-            <div
-              className={cn(
-                "block-collapse",
-                obj.isset(errors, UNDEFINED_ERR0R) && "block-collapse-open"
-              )}
-            >
-              <p className={cn("text-red-400 text-xs")} style={{ minHeight: 0 }}>
-                {obj.isset(errors, UNDEFINED_ERR0R) &&
-                  (errors?.[UNDEFINED_ERR0R]?.message as string | null)}
-              </p>
-            </div>
-            <Form.Text
-              name="email"
-              label="Адрес электронной почты"
-              rightIcon={Mail}
-              withPlaceholder
-              withLabel
-            />
-            <Form.Text
-              label="Пароль"
-              name="password"
-              type="password"
-              rightIcon={Lock}
-              withPlaceholder
-              withLabel
-            />
-            <Button
-              onClick={() => clearErrors()}
-              type="submit"
-              loading={submitting}
-              disabled={submitting}
-              className="w-full"
-              variant="primary"
-              size="oblong-2"
-            >
-              Войти в учетную запись
+          <p className="text-gray-400 text-xs">
+            У вас нет ещё доступной учётной записи в системе? Тогда стоит заполнить форму
+            регистрации:
+          </p>
+          <NavLink to="/passport/register">
+            <Button variant="secondary" className="w-full" size="oblong-2">
+              Регистрировать учетную запись
             </Button>
-            <p className="flex flex-wrap justify-center text-gray-400 text-xs">
-              Авторизуясь, вы соглашаетесь с условиями использования нашего сервиса.
+          </NavLink>
+          <Strip text="или" />
+          <div className="space-y-2 text-center">
+            <h2 className="text-2xl font-bold leading-none text-secondary-foreground">
+              Авторизация
+            </h2>
+            <p className="text-gray-400 text-xs">
+              Введите свой адрес электронной почты и пароль, чтобы войти в систему для получения
+              доступа к использованию сервиса.
             </p>
           </div>
+          <div
+            className={cn(
+              "block-collapse",
+              obj.isset(errors, UNDEFINED_ERR0R) && "block-collapse-open"
+            )}
+          >
+            <p className={cn("text-red-400 text-xs")} style={{ minHeight: 0 }}>
+              {obj.isset(errors, UNDEFINED_ERR0R) &&
+                (errors?.[UNDEFINED_ERR0R]?.message as string | null)}
+            </p>
+          </div>
+          <Form.Text
+            name="email"
+            label="Адрес электронной почты"
+            rightIcon={Mail}
+            withPlaceholder
+            withLabel
+          />
+          <Form.Text
+            label="Пароль"
+            name="password"
+            type="password"
+            rightIcon={Lock}
+            withPlaceholder
+            withLabel
+          />
+          <Button
+            onClick={() => clearErrors()}
+            type="submit"
+            loading={submitting}
+            disabled={submitting}
+            className="w-full"
+            variant="primary"
+            size="oblong-2"
+          >
+            Войти в учетную запись
+          </Button>
+          <p className="flex flex-wrap justify-center text-gray-400 text-xs">
+            Авторизуясь, вы соглашаетесь с условиями использования нашего сервиса.
+          </p>
         </>
       )}
     </Form>

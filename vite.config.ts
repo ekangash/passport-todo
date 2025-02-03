@@ -5,7 +5,15 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "./",
+  base: "/",
+  build: {
+    outDir: "./build/dist",
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+      },
+    },
+  },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "./") }],
   },
@@ -16,8 +24,13 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    host: true, // needed for the Docker Container port mapping to work
-    strictPort: true, // not necessary
+    host: true,
+    strictPort: true,
     port: 5173,
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
+    open: false,
+    hmr: false,
   },
 });

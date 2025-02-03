@@ -22,31 +22,31 @@ describe("TaskStore", () => {
     const firstTaskTitle = faker.animal.dog();
     const createdTask: Task = tasksStore.createTask({ title: firstTaskTitle });
 
-    expect(createdTask.title).toBe(firstTaskTitle);
+    expect(createdTask.title).to.equal(firstTaskTitle);
   });
 
   it("Должно быть создано новое активное задание", () => {
     const firstTaskTitle: string = faker.animal.dog();
     tasksStore.createTask({ title: firstTaskTitle });
 
-    expect(tasksStore.tasks.length).toBe(1);
-    expect(tasksStore.tasks[0].title).toBe(firstTaskTitle);
-    expect(tasksStore.tasks[0].status).toBe(TaskStatus.ACTIVE);
+    expect(tasksStore.tasks.length).to.equal(1);
+    expect(tasksStore.tasks[0].title).to.equal(firstTaskTitle);
+    expect(tasksStore.tasks[0].status).to.equal(TaskStatus.ACTIVE);
   });
 
   it("Должен измениться видимый активный статус", () => {
     const defaultVisibleActiveStatus: TaskStatus = tasksStore.visibleActiveStatus;
     tasksStore.changeVisibleActiveStatus(TaskStatus.ACTIVE);
 
-    expect(defaultVisibleActiveStatus).toBeUndefined();
-    expect(tasksStore.visibleActiveStatus).toBe(TaskStatus.ACTIVE);
+    expect(defaultVisibleActiveStatus).to.equal(undefined);
+    expect(tasksStore.visibleActiveStatus).to.equal(TaskStatus.ACTIVE);
   });
 
   it("Должен возвращать все задачи, если visibleActiveStatus не установлен", () => {
     tasksStore.createTask({ title: faker.animal.fish() });
     tasksStore.createTask({ title: faker.animal.cat() });
 
-    expect(tasksStore.visibleByStatus.length).toBe(2);
+    expect(tasksStore.visibleByStatus.length).to.equal(2);
   });
 
   it("Должен фильтровать задачи по visibleActiveStatus", () => {
@@ -56,7 +56,7 @@ describe("TaskStore", () => {
     tasksStore.changeVisibleActiveStatus(TaskStatus.ACTIVE);
 
     // Не должно быть активных задач
-    expect(tasksStore.visibleByStatus.length).toBe(0);
+    expect(tasksStore.visibleByStatus.length).to.equal(0);
   });
 
   it("Должен обновить задачу по uuid", () => {
@@ -67,7 +67,7 @@ describe("TaskStore", () => {
 
     tasksStore.updateByUuid(taskUuid, { title: updatedTitle });
 
-    expect(tasksStore.tasks[0].title).toBe(updatedTitle);
+    expect(tasksStore.tasks[0].title).to.equal(updatedTitle);
   });
 
   it("Должен удалить задачу по uuid", () => {
@@ -77,6 +77,6 @@ describe("TaskStore", () => {
     tasksStore.deleteByUuid(taskUuid);
 
     // Должно быть 0 задач после удаления
-    expect(tasksStore.tasks.length).toBe(0);
+    expect(tasksStore.tasks.length).to.equal(0);
   });
 });

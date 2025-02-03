@@ -14,8 +14,8 @@ export const AppPassportInitSession: React.FC = (): null => {
   useEffect((): void => {
     (async () => {
       try {
+        await PassportStore.initSession();
         if (location.origin !== "/passport") {
-          await PassportStore.initSession();
         } else {
           PassportStore.setStatus(PASSPORT_STATUS.AUTHENTICATED);
         }

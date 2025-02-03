@@ -1,6 +1,6 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React from "react";
-import {NavLink, Outlet} from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 /** 2 App - Components, Hooks */
 /** 3 Entities, Stores, Packages, Enums ... */
@@ -24,14 +24,13 @@ export const PassportLayout: React.FC = () => {
       <div className={cn("passport-layout-cover", `bg-cover-${num.random(4, 4)}`)} />
       <div className="flex flex-col layout-p bg-black/50 space-y-10 min-h-full">
         <div className="flex flex-col justify-center items-center flex-1 max-w-96 mx-auto space-y-2">
-          <div className="relative bg-background backdrop-blur-sm transition-all rounded-3xl space-y-5 p-6 max-w-xs w-full">
+          <div className="relative bg-background backdrop-blur-sm transition-all rounded-3xl gap-5 p-6 max-w-xs w-full">
             <div className="flex justify-center relative w-full">
               <NavLink to="/">
                 <Button
-                    href="/"
-                    className="text-gray-500 hover:text-primary absolute top-3 left-0"
-                    variant="none"
-                    size="none"
+                  className="text-gray-500 hover:text-primary absolute top-3 left-0"
+                  variant="none"
+                  size="none"
                 >
                   <Icon path={ArrowLeft} size={6} />
                 </Button>

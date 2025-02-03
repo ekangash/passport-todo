@@ -1,7 +1,7 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import React from "react";
-import {Shield, User, UserPlus} from "lucide-react";
-import {NavLink} from "react-router-dom";
+import { Shield, User, UserPlus } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 /** 2 App - Components, Hooks */
 import { Button } from "@/components/shared/button/Button";
@@ -14,6 +14,7 @@ import { Caption } from "@/components/shared/caption/Caption";
  * @return {React.ReactElement} Сформированный DOM узел.
  */
 export const AppLayoutPassportUnauthenticated: React.FC = () => {
+
   return (
     <>
       <Caption
@@ -32,32 +33,16 @@ export const AppLayoutPassportUnauthenticated: React.FC = () => {
             <p className="text-xs">Ваши данные в безопасности</p>
           </div>
         </div>
-        <div className="space-y-2">
-          <NavLink to="/passport/login?callbackUrl=/">
-            <Button
-                className="w-full"
-                variant="primary"
-                size="oblong-2"
-                text="sm"
-            >
-              <Icon
-                  path={User}
-                  color="none"
-              />
+        <div className="flex flex-col space-y-2">
+          <NavLink to={`/passport/login?callbackUrl=${location.pathname}`}>
+            <Button className="w-full" variant="primary" size="oblong-2" text="sm">
+              <Icon path={User} color="none" />
               Войти в учётную запись
             </Button>
           </NavLink>
-          <NavLink to="/passport/register?callbackUrl=/">
-            <Button
-                className="w-full"
-                variant="secondary"
-                size="oblong-2"
-                text="sm"
-            >
-              <Icon
-                  path={UserPlus}
-                  color="none"
-              />
+          <NavLink to={`/passport/register?callbackUrl=${location.pathname}`}>
+            <Button className="w-full" variant="secondary" size="oblong-2" text="sm">
+              <Icon path={UserPlus} color="none" />
               Регистрировать учетную запись
             </Button>
           </NavLink>

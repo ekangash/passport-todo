@@ -36,8 +36,11 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
   const onRegisterUser = async (attributes: object, formMethods: UseFormReturn): Promise<void> => {
     setSubmitting(true);
     const promise = PassportStore.register(
-        obj.get(attributes, "email"), obj.get(attributes, "password")
-    ).then(() => {
+        obj.get(attributes, "email"),
+        obj.get(attributes, "password"),
+        obj.get(attributes, "fullname")
+    )
+      .then(() => {
         setSubmitting(false);
         setRegistered(true);
       })
@@ -87,7 +90,7 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
 
   return registered ? (
     <>
-      <div className="space-y-2 text-center">
+      <div className="text-center mb-2">
         <h2 className="text-2xl font-bold leading-none text-primary">Учетная запись создана</h2>
         <p className="text-gray-400 text-xs">
           На указанный вами адрес электронной почты было отправлено письмо со ссылкой для
@@ -95,15 +98,15 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
           профиль.
         </p>
       </div>
-    <NavLink to="/passport/login">
+      <NavLink to="/passport/login">
         <Button className="w-full" variant="secondary" size="oblong-2">
-            Перейти к входу
+          Перейти к входу
         </Button>
-    </NavLink>
+      </NavLink>
     </>
   ) : (
     <Form
-      className={`space-y-6`}
+      className={`flex flex-col gap-4`}
       defaultValues={{}}
       resolver={formResolver}
       onSubmit={onRegisterUser}
@@ -114,10 +117,11 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
             У вас уже есть доступная учётная запись в системе? Тогда стоит заполнить форму
             авторизации:
           </p>
-
-          <Button href="/passport/login" className="w-full" variant="secondary" size="oblong-2">
-            Уже есть учетная запись
-          </Button>
+          <NavLink to="/passport/login">
+            <Button className="w-full" variant="secondary" size="oblong-2">
+              Уже есть учетная запись
+            </Button>
+          </NavLink>
           <Strip text="или" />
           <div className="space-y-2 text-center">
             <h2 className="text-2xl font-bold leading-none text-secondary-foreground">

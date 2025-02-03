@@ -7,7 +7,7 @@ import { AppThemeToggle } from "@/components/app/theme/toggle/AppThemeToggle";
 
 /** 3 Entities, Stores, Packages, Enums ... */
 import { cn } from "@/packages/utils";
-import { AppLayoutHeaderPassportLogout } from "@/components/app/layout/header/passport/logout/AppLayoutHeaderPassportLogout";
+import { AppLayoutHeaderPassport } from "@/components/app/layout/header/passport/AppLayoutHeaderPassport";
 
 interface AppLayoutHeaderProps {
   className?: string;
@@ -23,7 +23,7 @@ export const AppLayoutHeader: React.FC<AppLayoutHeaderProps> = ({
     <header className={cn("flex items-center justify-between gap-1", className)}>
       <AppLayoutLogo />
       <div className="flex items-center space-x-1.5">
-        <AppLayoutHeaderPassportLogout />
+        <AppLayoutHeaderPassport />
         <AppThemeToggle />
       </div>
     </header>
