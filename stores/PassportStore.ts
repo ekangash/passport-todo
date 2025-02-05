@@ -128,6 +128,14 @@ export class Passport {
 
     const session: string = await encrypt({ accessToken: response.token });
     new Cookies(null, { path: "/", secure: true }).set("session", session);
+
+    const profile = await axios
+        .create(response.token)
+        .get("/api/profile")
+        .then(({ data }) => data);
+
+    this.setProfile(profile);
+    this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
   }
 
   /**

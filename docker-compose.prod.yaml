@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: docker/prod/Dockerfile
     ports:
-      - "${DOCKER_PORT_PROD_HTTP:-3080}:80"
+      - "${DOCKER_PORT_PROD_HTTP:-3080}:5050"
       - "${DOCKER_PORT_PROD_HTTPS:-3443}:443"
     volumes:
       - ./docker/prod/nginx/default.conf:/etc/nginx/nginx.conf:ro

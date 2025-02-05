@@ -8,7 +8,7 @@
     "dev:react": "vite",
     "dev:watch": "rimraf build && concurrently 'tsc && vite build --watch' 'npm run dev:server'",
     "dev": "concurrently 'npm run dev:react' 'npm run dev:server'",
-    "build": "concurrently 'rimraf build/react' 'eslint .' 'npm run build:react' 'npm run build:server' 'copyfiles ./package.json build'",
+    "build": "concurrently 'eslint .' 'npm run build:react' 'npm run build:server' 'copyfiles ./package.json build'",
     "build:react": "rimraf build/react && eslint . && tsc && vite build && copyfiles ./package.json build",
     "build:server": "rimraf build/server && eslint . && tsc --project tsconfig.json",
     "start": "node ./build/server/app.js",
