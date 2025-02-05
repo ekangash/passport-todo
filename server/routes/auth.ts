@@ -12,6 +12,8 @@ authRoutes.post("/register", async (req: Request, res: Response): Promise<void> 
 
     if (profile) {
       res.status(400).json({ message: "Профиль уже существует", code: "bad_jwt" });
+
+      return;
     }
 
     await Profile.save({ email, password, fullname });
@@ -36,6 +38,8 @@ authRoutes.post("/login", async (req: Request, res: Response): Promise<void> => 
 
     if (!isMatch || !profile) {
       res.status(400).json({ message: "Неверные учетные данные", code: "bad_jwt" });
+
+      return;
     }
 
     const payload = { email: profile.email };

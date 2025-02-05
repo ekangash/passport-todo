@@ -98,9 +98,9 @@ export const PassportRegisterPage: React.FC = (): React.ReactElement => {
           профиль.
         </p>
       </div>
-      <NavLink to="/passport/login">
+      <NavLink to="/">
         <Button className="w-full" variant="secondary" size="oblong-2">
-          Перейти к входу
+          Перейти к приложению
         </Button>
       </NavLink>
     </>

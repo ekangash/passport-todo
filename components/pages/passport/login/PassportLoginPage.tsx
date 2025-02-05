@@ -48,7 +48,7 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
       .catch(exception => {
         formMethods.setError(UNDEFINED_ERR0R, {
           type: "manual",
-          message: exception.message,
+          message: exception.response?.data?.message || "Учётные данные недействительны",
         });
 
         throw exception;

@@ -20,7 +20,7 @@ export class AppExceptionHandler {
    * @return {any} Результат обработки.
    */
   onBadRequest = exception => {
-    toast.error(REQUEST_MESSAGES.BAD_REQUEST);
+    toast.error(exception?.response?.data?.message || REQUEST_MESSAGES.BAD_REQUEST);
 
     return null;
   };

@@ -9,7 +9,7 @@ import { PASSPORT_STATUS } from "@/types/passport.d";
 /** 3 Entities, Stores, Packages, Enums ... */
 import { nanoid } from "nanoid";
 import { decrypt, encrypt } from "@/packages/crypt/index";
-import {axios} from "@/packages/axios";
+import { axios } from "@/packages/axios";
 
 type AccessToken = string;
 
@@ -35,7 +35,7 @@ export class Passport {
   /**
    * @property {Session|null} accessToken Профиль сименса авторизации.
    */
-  profile: Profile|null = null
+  profile: Profile | null = null;
 
   /**
    * @return {void}
@@ -86,7 +86,10 @@ export class Passport {
       }
 
       const session: Session = await decrypt(sessionFromCookie);
-      const profile = await axios.create(obj.get(session, 'accessToken', '')).get("/api/profile").then(({ data }) => data);
+      const profile = await axios
+        .create(obj.get(session, "accessToken", ""))
+        .get("/api/profile")
+        .then(({ data }) => data);
 
       this.setProfile(profile);
       this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
@@ -103,16 +106,13 @@ export class Passport {
    * @return {Promise<void>} Токен авторизации.
    */
   async login(email: string, password: string): Promise<void> {
-    try {
-      const response = await axios.create().post("/api/auth/login", { email, password }).then(({ data }) => data);
+    const response = await axios
+      .create()
+      .post("/api/auth/login", { email, password })
+      .then(({ data }) => data);
 
-      const session: string = await encrypt({ accessToken: response.token });
-      new Cookies(null, { path: "/", secure: true }).set("session", session);
-
-    } catch (err) {
-      this.setProfile(null);
-      this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
-    }
+    const session: string = await encrypt({ accessToken: response.token });
+    new Cookies(null, { path: "/", secure: true }).set("session", session);
   }
 
   /**
@@ -121,7 +121,10 @@ export class Passport {
    * @return {Promise<void>} Токен авторизации.
    */
   async register(email: string, password: string, fullname: string): Promise<void> {
-    const response = await axios.create().post("/api/auth/register", { email, password, fullname }).then(({ data }) => data);
+    const response = await axios
+      .create()
+      .post("/api/auth/register", { email, password, fullname })
+      .then(({ data }) => data);
 
     const session: string = await encrypt({ accessToken: response.token });
     new Cookies(null, { path: "/", secure: true }).set("session", session);
