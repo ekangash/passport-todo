@@ -1,4 +1,4 @@
-Кодовая база размещена на Vercel: https://passport-todo.vercel.app/
+Кодовая база размещена на Vercel: https://passport-todo.vercel.app
 
 Однако Vercel не реагирует корректно на обновление страниц отличные от главной "/".
 
