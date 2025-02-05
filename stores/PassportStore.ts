@@ -130,9 +130,9 @@ export class Passport {
     new Cookies(null, { path: "/", secure: true }).set("session", session);
 
     const profile = await axios
-        .create(response.token)
-        .get("/api/profile")
-        .then(({ data }) => data);
+      .create(response.token)
+      .get("/api/profile")
+      .then(({ data }) => data);
 
     this.setProfile(profile);
     this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
