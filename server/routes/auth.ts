@@ -11,7 +11,7 @@ authRoutes.post("/register", async (req: Request, res: Response): Promise<void> 
     const profile = Profile.findOneByEmail(email);
 
     if (profile) {
-      res.status(400).json({ message: "Профиль уже существует", code: "bad_jwt" });
+      res.status(422).json({ message: "Профиль уже существует", code: "bad_jwt" });
 
       return;
     }
@@ -37,7 +37,7 @@ authRoutes.post("/login", async (req: Request, res: Response): Promise<void> => 
     const isMatch = await Profile.comparePassword(email, password);
 
     if (!isMatch || !profile) {
-      res.status(400).json({ message: "Неверные учетные данные", code: "bad_jwt" });
+      res.status(422).json({ message: "Неверные учетные данные", code: "bad_jwt" });
 
       return;
     }

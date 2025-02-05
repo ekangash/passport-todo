@@ -112,7 +112,7 @@ export class Passport {
       .then(({ data }) => data);
 
     const session: string = await encrypt({ accessToken: response.token });
-    new Cookies(null, { path: "/", secure: true }).set("session", session);
+    new Cookies(null, { path: "/" }).set("session", session);
   }
 
   /**
@@ -127,15 +127,20 @@ export class Passport {
       .then(({ data }) => data);
 
     const session: string = await encrypt({ accessToken: response.token });
-    new Cookies(null, { path: "/", secure: true }).set("session", session);
+    new Cookies(null, { path: "/" }).set("session", session);
 
-    const profile = await axios
-      .create(response.token)
-      .get("/api/profile")
-      .then(({ data }) => data);
+    try {
+      const profile = await axios
+        .create(response.token)
+        .get("/api/profile")
+        .then(({ data }) => data);
 
-    this.setProfile(profile);
-    this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
+      this.setProfile(profile);
+      this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
+    } catch (err) {
+      this.setProfile(null);
+      this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
+    }
   }
 
   /**
