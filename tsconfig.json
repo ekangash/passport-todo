@@ -1,48 +1,33 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "ESNext",
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
-        "jsx": "react-jsx",
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2018",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["ES6"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
 
-        /* Bundler mode */
-        "moduleResolution": "node",
-        "allowImportingTsExtensions": true,
-        "isolatedModules": false,
-        "moduleDetection": "force",
-        "noEmit": true,
-        "esModuleInterop": true,
+    /* Modules */
+    "module": "NodeNext",                                /* Specify what module code is generated. */
+    "rootDir": "./",
+    "resolveJsonModule": true,                        /* Enable importing .json files. */
 
-        /* Linting */
-        "strict": false,
-        "noUnusedLocals": true,
-        "noUnusedParameters": false,
-        "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": false,
-        "allowSyntheticDefaultImports": true,
-        "useDefineForClassFields": true,
+    /* JavaScript Support */
+    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */"outDir": "./build",                                   /* Specify an output folder for all emitted files. */
+  "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
+    // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
+    "forceConsistentCasingInFileNames": true,
+    "rewriteRelativeImportExtensions": true,
+    "strictNullChecks": false,           // Отключает строгую проверку null и undefined
 
-        /* Path */
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["./*"]
-        }
-    },
-    "include": [
-        "packages/*.ts",
-        "components/*.ts",
-        "components/*.tsx",
-        "enums/*.ts",
-        "hooks/*.ts",
-        "hooks/*.tsx",
-        "main.tsx",
-        "types/**.d.ts",
-        "node_modules/@types/node/globals.d.ts",
-        "node_modules/react-hook-form/dist/types/form.d.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "tests"
-    ],
-    "allowJs": false
+    /* Type Checking */
+    "strict": false,                                      /* Enable all strict type-checking options. */
+    "noImplicitAny": false,
+    "noImplicitThis": false,                        /* Enable error reporting for expressions and declarations with an implied 'any' type. */
+
+    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+  },
+  "include": ["./server/**/*"],
+  "exclude": ["node_modules", "build"],
+  "lib": ["esnext"],
+  "ts-node": {
+    "esm": true
+  }
 }

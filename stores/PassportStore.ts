@@ -1,14 +1,15 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import { makeObservable, action, observable } from "mobx";
 import Cookies from "universal-cookie";
+import { obj, str } from "data-support";
 
 /** 2 App - Components, Hooks */
 import { PASSPORT_STATUS } from "@/types/passport.d";
 
 /** 3 Entities, Stores, Packages, Enums ... */
-import { obj } from "data-support";
 import { nanoid } from "nanoid";
 import { decrypt, encrypt } from "@/packages/crypt/index";
+import {axios} from "@/packages/axios";
 
 type AccessToken = string;
 
@@ -16,10 +17,11 @@ interface Profile {
   fullname: string;
   email: string;
   password: string;
-  accessToken: AccessToken;
 }
 
-type SessionProfile = Omit<Profile, "password">;
+type Session = {
+  accessToken: AccessToken;
+};
 
 /**
  * @type Passport
@@ -31,19 +33,18 @@ export class Passport {
   status: PASSPORT_STATUS = PASSPORT_STATUS.LOADING;
 
   /**
-   * @property {object|null} session Профиль сименса авторизации.
+   * @property {Session|null} accessToken Профиль сименса авторизации.
    */
-  session: SessionProfile | null = null;
+  profile: Profile|null = null
 
   /**
    * @return {void}
    */
   constructor() {
     makeObservable(this, {
-      session: observable,
+      profile: observable,
       status: observable,
       setStatus: action.bound,
-      setSession: action.bound,
       isAuthenticated: observable,
       isLoading: observable,
     });
@@ -55,7 +56,7 @@ export class Passport {
    * @return {boolean}
    */
   isAuthenticated(): boolean {
-    return this.status === PASSPORT_STATUS.AUTHENTICATED && obj.contains(this.session);
+    return this.status === PASSPORT_STATUS.AUTHENTICATED && obj.contains(this.profile);
   }
 
   /**
@@ -75,22 +76,22 @@ export class Passport {
     this.setStatus(PASSPORT_STATUS.LOADING);
 
     try {
-      const sessionProfileFromCookie: string = await new Promise(resolve => {
-        setTimeout(() => resolve(new Cookies(null, { path: "/" }).get("session") || ""), 2000);
-      });
+      const sessionFromCookie: string = new Cookies(null, { path: "/" }).get("session") || "";
 
-      if (!sessionProfileFromCookie) {
-        this.setSession(null);
+      if (!sessionFromCookie) {
+        this.setProfile(null);
         this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
 
         return;
       }
 
-      const sessionProfile: SessionProfile = await decrypt(sessionProfileFromCookie);
-      this.setSession(sessionProfile);
+      const session: Session = await decrypt(sessionFromCookie);
+      const profile = await axios.create(obj.get(session, 'accessToken', '')).get("/api/profile").then(({ data }) => data);
+
+      this.setProfile(profile);
       this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
     } catch (err) {
-      this.setSession(null);
+      this.setProfile(null);
       this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
       throw err;
     }
@@ -101,32 +102,17 @@ export class Passport {
    *
    * @return {Promise<void>} Токен авторизации.
    */
-  async login(email: string, passport: string): Promise<void> {
-    const profiles: Profile[] = JSON.parse(localStorage.getItem("profiles") || "[]") as Profile[];
-    let accessProfile = null;
+  async login(email: string, password: string): Promise<void> {
+    try {
+      const response = await axios.create().post("/api/auth/login", { email, password }).then(({ data }) => data);
 
-    for (let idx = 0; idx < profiles.length; idx++) {
-      const profile: Profile = profiles[idx];
-      const profileAllowedLogin =
-        obj.get(profile, "email") === email && obj.get(profile, "password") === passport;
+      const session: string = await encrypt({ accessToken: response.token });
+      new Cookies(null, { path: "/", secure: true }).set("session", session);
 
-      if (profileAllowedLogin) {
-        accessProfile = { ...profile, accessToken: nanoid(32) };
-        profiles[idx] = accessProfile;
-      }
+    } catch (err) {
+      this.setProfile(null);
+      this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
     }
-
-    if (accessProfile === null) {
-      throw Error("Пользователь не идентифицирован в системе");
-    }
-
-    const session: string = await encrypt(
-      obj.omit<Omit<Profile, "password">>(accessProfile, ["password"])
-    );
-    new Cookies(null, { path: "/" }).set("session", session);
-    localStorage.setItem("profiles", JSON.stringify(profiles));
-
-    // await axios.create().post("/api/passport/login", { email, passport });
   }
 
   /**
@@ -135,11 +121,10 @@ export class Passport {
    * @return {Promise<void>} Токен авторизации.
    */
   async register(email: string, password: string, fullname: string): Promise<void> {
-    const profiles: Profile[] = JSON.parse(localStorage.getItem("profiles") || "[]") as Profile[];
-    profiles.push({ email, password, fullname, accessToken: null });
-    localStorage.setItem("profiles", JSON.stringify(profiles));
+    const response = await axios.create().post("/api/auth/register", { email, password, fullname }).then(({ data }) => data);
 
-    // await axios.create().post("/api/passport/register", profile);
+    const session: string = await encrypt({ accessToken: response.token });
+    new Cookies(null, { path: "/", secure: true }).set("session", session);
   }
 
   /**
@@ -148,24 +133,9 @@ export class Passport {
    * @return {Promise<this>} Экземпляр текущего объекта.
    */
   async logout(): Promise<any> {
-    const profiles: Profile[] = JSON.parse(localStorage.getItem("profiles") || "[]") as Profile[];
-
-    for (let idx = 0; idx < profiles.length; idx++) {
-      const profile: Profile = profiles[idx];
-      const profileAllowedLogin = obj.get(profile, "email") === obj.get(this.session, "email");
-
-      if (profileAllowedLogin) {
-        profile.accessToken = null;
-        profiles[idx] = profile;
-      }
-    }
-
-    localStorage.setItem("profiles", JSON.stringify(profiles));
-    this.setSession(null);
+    this.setProfile(null);
     this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
     new Cookies(null, { path: "/" }).remove("session");
-
-    // await axios.create(this.accessToken).post(`/api/passport/logout`);
   }
 
   /**
@@ -182,12 +152,12 @@ export class Passport {
   /**
    * Устанавливает состояние сессии.
    *
-   * @param {SessionProfile} session Значение сессии профиля.
+   * @param {Profile} profile Значение сессии профиля.
    *
    * @return {void}
    */
-  setSession(session: SessionProfile | null): void {
-    this.session = session;
+  setProfile(profile: Profile): void {
+    this.profile = profile;
   }
 }
 

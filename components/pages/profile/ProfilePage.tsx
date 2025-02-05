@@ -21,8 +21,8 @@ export const ProfilePage: React.FC = observer((): React.ReactElement => {
         "bg-secondary p-4 text-center w-full flex flex-col items-center justify-center rounded-2xl lg:rounded-3xl xl:rounded-[2rem]"
       )}
     >
-      <Caption description={obj.get(PassportStore.session, "email")}>
-        {obj.get(PassportStore.session, "fullname")}
+      <Caption description={obj.get(PassportStore.profile, "email")}>
+        {obj.get(PassportStore.profile, "fullname")}
       </Caption>
     </div>
   );

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   base: "/",
   build: {
-    outDir: "./build/dist",
+    outDir: "./build/react",
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
@@ -28,7 +28,7 @@ export default defineConfig({
     strictPort: true,
     port: 5173,
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "http://localhost:5050",
     },
     open: false,
     hmr: false,
