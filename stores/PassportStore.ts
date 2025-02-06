@@ -115,7 +115,6 @@ export class Passport {
     // const session: string = await encrypt({ accessToken: response.token });
     // new Cookies(null, { path: "/" }).set("session", session);
     new Cookies(null, { path: "/", secure: true }).set("accessToken", response.token);
-
   }
 
   /**
