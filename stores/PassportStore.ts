@@ -76,18 +76,19 @@ export class Passport {
     this.setStatus(PASSPORT_STATUS.LOADING);
 
     try {
-      const sessionFromCookie: string = new Cookies(null, { path: "/" }).get("session") || "";
+      // const sessionFromCookie: string = new Cookies(null, { path: "/" }).get("session") || "";
+      const accessToken: string = new Cookies(null, { path: "/" }).get("accessToken") || "";
 
-      if (!sessionFromCookie) {
+      if (!accessToken) {
         this.setProfile(null);
         this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
 
         return;
       }
 
-      const session: Session = await decrypt(sessionFromCookie);
+      // const session: Session = await decrypt(sessionFromCookie);
       const profile = await axios
-        .create(obj.get(session, "accessToken", ""))
+        .create(accessToken)
         .get("/api/profile")
         .then(({ data }) => data);
 
@@ -111,8 +112,10 @@ export class Passport {
       .post("/api/auth/login", { email, password })
       .then(({ data }) => data);
 
-    const session: string = await encrypt({ accessToken: response.token });
-    new Cookies(null, { path: "/" }).set("session", session);
+    // const session: string = await encrypt({ accessToken: response.token });
+    // new Cookies(null, { path: "/" }).set("session", session);
+    new Cookies(null, { path: "/", secure: true }).set("accessToken", response.token);
+
   }
 
   /**
@@ -126,10 +129,11 @@ export class Passport {
       .post("/api/auth/register", { email, password, fullname })
       .then(({ data }) => data);
 
-    const session: string = await encrypt({ accessToken: response.token });
-    new Cookies(null, { path: "/" }).set("session", session);
-
     try {
+      // const session: string = await encrypt({ accessToken: response.token });
+      // new Cookies(null, { path: "/" }).set("session", session);
+      new Cookies(null, { path: "/", secure: true }).set("accessToken", response.token);
+
       const profile = await axios
         .create(response.token)
         .get("/api/profile")
