@@ -160,7 +160,7 @@ export class Passport {
   async logout(): Promise<any> {
     this.setProfile(null);
     this.setStatus(PASSPORT_STATUS.UNAUTHENTICATED);
-    new Cookies(null, { path: "/" }).remove("session");
+    new Cookies(null, { path: "/" }).remove("accessToken");
   }
 
   /**
