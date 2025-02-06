@@ -7,8 +7,6 @@ import { obj, str } from "data-support";
 import { PASSPORT_STATUS } from "@/types/passport.d";
 
 /** 3 Entities, Stores, Packages, Enums ... */
-import { nanoid } from "nanoid";
-import { decrypt, encrypt } from "@/packages/crypt/index";
 import { axios } from "@/packages/axios";
 
 type AccessToken = string;
@@ -114,7 +112,15 @@ export class Passport {
 
     // const session: string = await encrypt({ accessToken: response.token });
     // new Cookies(null, { path: "/" }).set("session", session);
-    new Cookies(null, { path: "/", secure: true }).set("accessToken", response.token);
+    new Cookies(null, { path: "/" }).set("accessToken", response.token);
+
+    const profile = await axios
+      .create(response.token)
+      .get("/api/profile")
+      .then(({ data }) => data);
+
+    this.setProfile(profile);
+    this.setStatus(PASSPORT_STATUS.AUTHENTICATED);
   }
 
   /**
@@ -131,7 +137,7 @@ export class Passport {
     try {
       // const session: string = await encrypt({ accessToken: response.token });
       // new Cookies(null, { path: "/" }).set("session", session);
-      new Cookies(null, { path: "/", secure: true }).set("accessToken", response.token);
+      new Cookies(null, { path: "/" }).set("accessToken", response.token);
 
       const profile = await axios
         .create(response.token)

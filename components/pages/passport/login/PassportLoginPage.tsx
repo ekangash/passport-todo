@@ -41,7 +41,6 @@ export const PassportLoginPage: React.FC = (): React.ReactElement => {
       obj.get(attributes, "password")
     )
       .then(async (): Promise<void> => {
-        await PassportStore.initSession();
         const pathToRedirect: string = urlSearchParams.get("callbackUrl") || "/";
         navigate(pathToRedirect);
       })
