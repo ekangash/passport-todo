@@ -10,7 +10,7 @@
     "dev": "concurrently 'npm run dev:react' 'npm run dev:server'",
     "build": "concurrently 'eslint .' 'npm run build:react' 'npm run build:server' 'copyfiles ./package.json build'",
     "build:react": "rimraf build/react && eslint . && tsc --project tsconfig.react.json && vite build ",
-    "build:server": "rimraf build/server && eslint . && tsc --project tsconfig.server.json",
+    "build:server": "rimraf build/server && eslint . && tsc --project tsconfig.json",
     "start": "node ./build/server/app.js",
     "test": "vitest",
     "lint": "eslint .",

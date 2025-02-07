@@ -1,7 +1,29 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.react.json" },
-    { "path": "./tsconfig.server.json" }
-  ],
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2018",
+    "lib": ["ES6"],
+    /* Modules */
+    "module": "NodeNext",
+    "rootDir": "./server",
+    "outDir": "./build/server",
+    "resolveJsonModule": true,
+    /* JavaScript Support */
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "rewriteRelativeImportExtensions": true,
+    "strictNullChecks": false,
+    /* Type Checking */
+    "strict": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "skipLibCheck": true
+  },
+  "include": ["./server/**/*"],
+  "exclude": ["node_modules", "build"],
+  "lib": ["esnext"],
+  "ts-node": {
+    "esm": true
+  }
 }
