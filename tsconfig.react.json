@@ -4,7 +4,6 @@
         "module": "ESNext",
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "jsx": "react-jsx",
-
         /* Bundler mode */
         "moduleResolution": "node",
         "allowImportingTsExtensions": true,
@@ -12,7 +11,6 @@
         "moduleDetection": "force",
         "noEmit": true,
         "esModuleInterop": true,
-
         /* Linting */
         "strict": false,
         "noUnusedLocals": true,
@@ -21,7 +19,6 @@
         "noUncheckedSideEffectImports": false,
         "allowSyntheticDefaultImports": true,
         "useDefineForClassFields": true,
-
         /* Path */
         "baseUrl": ".",
         "paths": {

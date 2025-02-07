@@ -1,7 +1,7 @@
 /** 1 Node - Modules, Components, Hooks, Icons */
 import { makeObservable, action, observable } from "mobx";
 import Cookies from "universal-cookie";
-import { obj, str } from "data-support";
+import { obj } from "data-support";
 
 /** 2 App - Components, Hooks */
 import { PASSPORT_STATUS } from "@/types/passport.d";
@@ -9,17 +9,16 @@ import { PASSPORT_STATUS } from "@/types/passport.d";
 /** 3 Entities, Stores, Packages, Enums ... */
 import { axios } from "@/packages/axios";
 
-type AccessToken = string;
-
 interface Profile {
   fullname: string;
   email: string;
   password: string;
 }
 
-type Session = {
-  accessToken: AccessToken;
-};
+// type AccessToken = string;
+// type Session = {
+//   accessToken: AccessToken;
+// }
 
 /**
  * @type Passport
@@ -31,7 +30,7 @@ export class Passport {
   status: PASSPORT_STATUS = PASSPORT_STATUS.LOADING;
 
   /**
-   * @property {Session|null} accessToken Профиль сименса авторизации.
+   * @property {Profile|null} profile Профиль сименса авторизации.
    */
   profile: Profile | null = null;
 
@@ -111,7 +110,7 @@ export class Passport {
       .then(({ data }) => data);
 
     // const session: string = await encrypt({ accessToken: response.token });
-    // new Cookies(null, { path: "/" }).set("session", session);
+    // new Cookies(null, { path: "/", secure: true }).set("session", session);
     new Cookies(null, { path: "/" }).set("accessToken", response.token);
 
     const profile = await axios
@@ -136,7 +135,7 @@ export class Passport {
 
     try {
       // const session: string = await encrypt({ accessToken: response.token });
-      // new Cookies(null, { path: "/" }).set("session", session);
+      // new Cookies(null, { path: "/", secure: true }).set("session", session);
       new Cookies(null, { path: "/" }).set("accessToken", response.token);
 
       const profile = await axios
